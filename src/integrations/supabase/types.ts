@@ -1,0 +1,746 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.1"
+  }
+  public: {
+    Tables: {
+      companies: {
+        Row: {
+          address: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          department: Database["public"]["Enums"]["department_type"]
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          phone: string | null
+          postal_code: string | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          department?: Database["public"]["Enums"]["department_type"]
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          phone?: string | null
+          postal_code?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          department?: Database["public"]["Enums"]["department_type"]
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          postal_code?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      contacts: {
+        Row: {
+          company_id: string | null
+          contact_type: Database["public"]["Enums"]["contact_type"]
+          created_at: string
+          department: Database["public"]["Enums"]["department_type"]
+          email: string | null
+          first_name: string
+          id: string
+          job_title: string | null
+          last_name: string
+          mobile: string | null
+          notes: string | null
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          company_id?: string | null
+          contact_type?: Database["public"]["Enums"]["contact_type"]
+          created_at?: string
+          department?: Database["public"]["Enums"]["department_type"]
+          email?: string | null
+          first_name: string
+          id?: string
+          job_title?: string | null
+          last_name: string
+          mobile?: string | null
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string | null
+          contact_type?: Database["public"]["Enums"]["contact_type"]
+          created_at?: string
+          department?: Database["public"]["Enums"]["department_type"]
+          email?: string | null
+          first_name?: string
+          id?: string
+          job_title?: string | null
+          last_name?: string
+          mobile?: string | null
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contacts_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_activities: {
+        Row: {
+          company_id: string | null
+          completed_at: string | null
+          contact_id: string | null
+          created_at: string
+          department: Database["public"]["Enums"]["department_type"]
+          description: string | null
+          due_date: string | null
+          id: string
+          lead_id: string | null
+          subject: string
+          type: string
+        }
+        Insert: {
+          company_id?: string | null
+          completed_at?: string | null
+          contact_id?: string | null
+          created_at?: string
+          department?: Database["public"]["Enums"]["department_type"]
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          lead_id?: string | null
+          subject: string
+          type: string
+        }
+        Update: {
+          company_id?: string | null
+          completed_at?: string | null
+          contact_id?: string | null
+          created_at?: string
+          department?: Database["public"]["Enums"]["department_type"]
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          lead_id?: string | null
+          subject?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_activities_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_activities_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_activities_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          closed_at: string | null
+          company_id: string | null
+          contact_id: string | null
+          created_at: string
+          department: Database["public"]["Enums"]["department_type"]
+          description: string | null
+          expected_close_date: string | null
+          id: string
+          notes: string | null
+          probability: number | null
+          status: Database["public"]["Enums"]["lead_status"]
+          title: string
+          updated_at: string
+          value: number | null
+        }
+        Insert: {
+          closed_at?: string | null
+          company_id?: string | null
+          contact_id?: string | null
+          created_at?: string
+          department?: Database["public"]["Enums"]["department_type"]
+          description?: string | null
+          expected_close_date?: string | null
+          id?: string
+          notes?: string | null
+          probability?: number | null
+          status?: Database["public"]["Enums"]["lead_status"]
+          title: string
+          updated_at?: string
+          value?: number | null
+        }
+        Update: {
+          closed_at?: string | null
+          company_id?: string | null
+          contact_id?: string | null
+          created_at?: string
+          department?: Database["public"]["Enums"]["department_type"]
+          description?: string | null
+          expected_close_date?: string | null
+          id?: string
+          notes?: string | null
+          probability?: number | null
+          status?: Database["public"]["Enums"]["lead_status"]
+          title?: string
+          updated_at?: string
+          value?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      narrowcast_channels: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          rss_feed_url: string | null
+          slide_duration: number
+          ticker_enabled: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          rss_feed_url?: string | null
+          slide_duration?: number
+          ticker_enabled?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          rss_feed_url?: string | null
+          slide_duration?: number
+          ticker_enabled?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      narrowcast_items: {
+        Row: {
+          channel_id: string
+          content_text: string | null
+          content_type: string
+          content_url: string | null
+          created_at: string
+          duration: number
+          ends_at: string | null
+          id: string
+          is_active: boolean
+          position: number
+          starts_at: string | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          channel_id: string
+          content_text?: string | null
+          content_type: string
+          content_url?: string | null
+          created_at?: string
+          duration?: number
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          position?: number
+          starts_at?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          channel_id?: string
+          content_text?: string | null
+          content_type?: string
+          content_url?: string | null
+          created_at?: string
+          duration?: number
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          position?: number
+          starts_at?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "narrowcast_items_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "narrowcast_channels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      panel_contract_prices: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          price_per_m2: number
+          product_id: string
+          updated_at: string
+          valid_from: string
+          valid_until: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          price_per_m2: number
+          product_id: string
+          updated_at?: string
+          valid_from?: string
+          valid_until?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          price_per_m2?: number
+          product_id?: string
+          updated_at?: string
+          valid_from?: string
+          valid_until?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "panel_contract_prices_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "panel_contract_prices_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "panel_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      panel_product_layers: {
+        Row: {
+          artikelgroep: string
+          artikelgroep_display: string | null
+          created_at: string
+          dikte: number
+          id: string
+          laagtype: string
+          position: number
+          product_id: string
+        }
+        Insert: {
+          artikelgroep: string
+          artikelgroep_display?: string | null
+          created_at?: string
+          dikte: number
+          id?: string
+          laagtype: string
+          position: number
+          product_id: string
+        }
+        Update: {
+          artikelgroep?: string
+          artikelgroep_display?: string | null
+          created_at?: string
+          dikte?: number
+          id?: string
+          laagtype?: string
+          position?: number
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "panel_product_layers_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "panel_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      panel_products: {
+        Row: {
+          base_price: number | null
+          created_at: string
+          dikte: number
+          id: string
+          is_active: boolean
+          name: string | null
+          updated_at: string
+        }
+        Insert: {
+          base_price?: number | null
+          created_at?: string
+          dikte: number
+          id?: string
+          is_active?: boolean
+          name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          base_price?: number | null
+          created_at?: string
+          dikte?: number
+          id?: string
+          is_active?: boolean
+          name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_departments: {
+        Row: {
+          created_at: string
+          department: Database["public"]["Enums"]["department_type"]
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          department: Database["public"]["Enums"]["department_type"]
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          department?: Database["public"]["Enums"]["department_type"]
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wiki_pages: {
+        Row: {
+          content: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          parent_id: string | null
+          position: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          parent_id?: string | null
+          position?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          parent_id?: string | null
+          position?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wiki_pages_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "wiki_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      has_department_access: {
+        Args: {
+          _department: Database["public"]["Enums"]["department_type"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+    }
+    Enums: {
+      app_role: "admin" | "user"
+      contact_type: "klant" | "leverancier" | "partner" | "prospect"
+      department_type: "algemeen" | "tifa" | "panelen" | "units" | "mycuby"
+      lead_status:
+        | "nieuw"
+        | "gekwalificeerd"
+        | "offerte"
+        | "onderhandeling"
+        | "gewonnen"
+        | "verloren"
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {
+      app_role: ["admin", "user"],
+      contact_type: ["klant", "leverancier", "partner", "prospect"],
+      department_type: ["algemeen", "tifa", "panelen", "units", "mycuby"],
+      lead_status: [
+        "nieuw",
+        "gekwalificeerd",
+        "offerte",
+        "onderhandeling",
+        "gewonnen",
+        "verloren",
+      ],
+    },
+  },
+} as const
